@@ -44,13 +44,13 @@ namespace checkout.tests
 
             var target = new Checkout();
             var item = new Item("A99", 0.50m);
-            var timesToScan = 5;
+            var timesToScan = 2;
             for(int i = 0; i < timesToScan; ++i){
                 target.Scan(item);
             }
             var result = target.Total();
             
-            var expectedTotal = 2.5m;
+            var expectedTotal = 1m;
             Assert.That(result, Is.EqualTo(expectedTotal));
         }
 
