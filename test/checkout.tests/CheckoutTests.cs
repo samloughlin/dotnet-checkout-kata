@@ -70,5 +70,20 @@ namespace checkout.tests
             Assert.That(result, Is.EqualTo(expectedTotal));
         }
 
+        [Test]
+        public void WhenTotalCalled_AndBiscuitsAreScanned_AndApplieIsScanned_AndAnotherBiscuitsIsScanned_Returns0_95(){
+
+            var target = new Checkout();
+            var apple = new Item("A99", 0.50m);
+            var biscuit = new Item("B15", 0.30m);
+
+            target.Scan(biscuit);
+            target.Scan(apple);
+            target.Scan(biscuit);
+            var result = target.Total();
+            
+            var expectedTotal = 0.95m;
+            Assert.That(result, Is.EqualTo(expectedTotal));
+        }
     }
 }
