@@ -85,5 +85,24 @@ namespace checkout.tests
             var expectedTotal = 0.95m;
             Assert.That(result, Is.EqualTo(expectedTotal));
         }
+
+        
+        [Test]
+        public void WhenTotalCalled_AndItemsHaveSpecialOffers_And6ApplesHaveBeenScanned_Returns2_60(){
+
+            var target = new Checkout();
+            var apple = new Item("A99", 0.50m);
+
+            target.Scan(apple);
+            target.Scan(apple);
+            target.Scan(apple);
+            target.Scan(apple);
+            target.Scan(apple);
+            target.Scan(apple);
+            var result = target.Total();
+            
+            var expectedTotal = 2.60m;
+            Assert.That(result, Is.EqualTo(expectedTotal));
+        }
     }
 }

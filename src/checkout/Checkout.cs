@@ -19,11 +19,12 @@ namespace checkout
             {
                 if (itemsToProcess.Count(s => s.Sku == offer.Sku) >= offer.Quantity)
                 {
-                    total += offer.OfferPrice;
-                    var countToRemove = offer.Quantity;
+                    var countToRemove = itemsToProcess.Count(s => s.Sku == offer.Sku);
+                    var numberOfItemsNotOnOffer = itemsToProcess.Count(s => s.Sku == offer.Sku) % offer.Quantity;
 
+                    total += offer.OfferPrice * (countToRemove / offer.Quantity);
                     var i = itemsToProcess.Count() - 1;
-                    while (countToRemove != 0)
+                    while (countToRemove != numberOfItemsNotOnOffer)
                     {
                         var currentItem = itemsToProcess[i];
                         if (currentItem.Sku == offer.Sku && countToRemove != 0)
