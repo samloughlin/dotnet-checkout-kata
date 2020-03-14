@@ -17,32 +17,32 @@ namespace checkout
             var total = 0m;
             foreach (var offer in SpecialOffers)
             {
-                if (itemsToProcess.Count(s => s.Sku == offer.Sku) >= offer.Quantity)
-                {
-                    var countToRemove = itemsToProcess.Count(s => s.Sku == offer.Sku);
-                    var numberOfItemsNotOnOffer = itemsToProcess.Count(s => s.Sku == offer.Sku) % offer.Quantity;
-
-                    total += offer.OfferPrice * (countToRemove / offer.Quantity);
-                    var i = itemsToProcess.Count() - 1;
-                    while (countToRemove != numberOfItemsNotOnOffer)
-                    {
-                        var currentItem = itemsToProcess[i];
-                        if (currentItem.Sku == offer.Sku && countToRemove != 0)
-                        {
-                            itemsToProcess.RemoveAt(i);
-                            countToRemove--;
-                        }
-                        else if (countToRemove == 0)
-                        {
-                            break;
-                        }
-                        i--;
-                    }
-                }
-
+                total += CalculateDiscount(offer, itemsToProcess);
             }
 
             total += itemsToProcess.Sum(s => s.UnitPrice);
+            return total;
+        }
+
+        private decimal CalculateDiscount(SpecialOffer offer, IList<Item> itemsToProcess){
+            var total = 0m;
+
+            var countToRemove = itemsToProcess.Count(s => s.Sku == offer.Sku);
+            var numberOfItemsNotOnOffer = itemsToProcess.Count(s => s.Sku == offer.Sku) % offer.Quantity;
+
+            total += offer.OfferPrice * (countToRemove / offer.Quantity);
+
+            // Remove items from processed list
+            var i = itemsToProcess.Count();
+            while (countToRemove != numberOfItemsNotOnOffer)
+            {
+                i--;
+                if (itemsToProcess[i].Sku == offer.Sku)
+                {
+                    itemsToProcess.RemoveAt(i);
+                    countToRemove--;
+                }
+            }
             return total;
         }
 
@@ -50,7 +50,6 @@ namespace checkout
         {
             ScannedItems.Add(item);
         }
-
 
     }
 
