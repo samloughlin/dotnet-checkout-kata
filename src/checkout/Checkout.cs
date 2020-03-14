@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace checkout
 {
@@ -7,7 +8,7 @@ namespace checkout
         public IList<Item> ScannedItems { get; } = new List<Item>();
         public decimal Total()
         {
-            return 0m;
+            return ScannedItems.Sum(s => s.UnitPrice);
         }
 
         public void Scan(Item item)

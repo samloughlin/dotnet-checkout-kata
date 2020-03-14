@@ -38,5 +38,20 @@ namespace checkout.tests
 
             Assert.That(result, Is.EqualTo(item.UnitPrice));
         }
+
+        [Test]
+        public void WhenTotalCalled_AndMultipleIdenticalItemsScanned_ReturnsSumOfTheItems(){
+
+            var target = new Checkout();
+            var item = new Item("A99", 0.50m);
+            var timesToScan = 5;
+            for(int i = 0; i < timesToScan; ++i){
+                target.Scan(item);
+            }
+            var result = target.Total();
+            
+            var expectedTotal = 2.5m;
+            Assert.That(result, Is.EqualTo(expectedTotal));
+        }
     }
 }
