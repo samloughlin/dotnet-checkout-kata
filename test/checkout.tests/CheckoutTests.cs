@@ -53,5 +53,22 @@ namespace checkout.tests
             var expectedTotal = 2.5m;
             Assert.That(result, Is.EqualTo(expectedTotal));
         }
+
+        
+        [Test]
+        public void WhenTotalCalled_AndItemsHaveSpecialOffers_And3ApplesHaveBeenScanned_Returns1_30(){
+
+            var target = new Checkout();
+            var item = new Item("A99", 0.50m);
+            var timesToScan = 3;
+            for(int i = 0; i < timesToScan; ++i){
+                target.Scan(item);
+            }
+            var result = target.Total();
+            
+            var expectedTotal = 1.3m;
+            Assert.That(result, Is.EqualTo(expectedTotal));
+        }
+
     }
 }
