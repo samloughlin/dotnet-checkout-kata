@@ -7,6 +7,8 @@ namespace checkout.tests
     public class CheckoutTests
     {
         [Test]
-        public void Test(){}
+        public void Test(){
+            Assert.Fail();
+        }
     }
 }
